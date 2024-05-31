@@ -1,10 +1,10 @@
-# Nombre del juego (<- borrar y completar)
+# Wordle Wollok Edition
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+- Damian Piana
+- Gabriel Alvarez
+- Marco Musillario
 
 ## Capturas
 
@@ -17,6 +17,6 @@
 
 ## Otros
 
-- Curso/Facultad
-- Versión de wollok
-- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
+- Programacion con Objetos 1 Comision 1 / Universidad Nacional de Hurlingam
+- Wollok 3.0.0
+- Una vez terminado, no tenemos problemas en que el repositorio sea público
