@@ -3,7 +3,7 @@ object abecedario {
 	const property lista = new Dictionary()
 	
 	
-	method inicializar(){
+	method initialize(){
 		lista.put("q",game.at(5,6))
 		lista.put("w",game.at(7,6))
 		lista.put("e",game.at(9,6))

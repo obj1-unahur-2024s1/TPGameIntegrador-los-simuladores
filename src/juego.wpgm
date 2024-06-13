@@ -3,5 +3,7 @@ import juego.*
 
 
 program juego {
+	
 	juego.configuracionInicial()
+	
 }

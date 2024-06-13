@@ -1,36 +1,59 @@
 import datos.*
 import utilidades.*
 import wollok.game.*
+import componentes.*
 
 
-class Tecla inherits Celda{
-	const property idLetra
-	const property celdaEstado = new CeldaEstado(ruta="celdasTeclado/celdaTeclado",position=self.position())
-
-	override method image()= "letras/"+idLetra+".png"
+class CeldaTecla inherits Celda{
+	const celdaEstado = new CeldaEstado(id="estadoTecla"+id, position=self.position(), ruta="celdasTeclado/celdaTeclado")
+	const celdaLetra = new CeldaLetra(id="letraTecla"+id, letra=id, position = position)
 	
-	method dibujarTecla(){
+	
+	override method image(){}
+	
+	override method dibujar(){
 		celdaEstado.dibujar()
-		game.addVisual(self)
+		celdaLetra.dibujar()
+		self.agregarEvento()
+	}
+	
+	method agregarEvento(){
+		keyboard.letter(id).onPressDo({
+			self.presionar()
+		})
+	}
+	
+	method presionar(){
+		// manda mensaje a tablero para que se añada la letra
+	}
+	
+	override method resetear(){
+		celdaEstado.inicial()
 	}
 }
 
-object teclado{
-	const property teclas = []
-	
-	method generar(){
-		teclas.clear()
-		abecedario.inicializar()
+object teclado inherits Componente{ 
+ 
+	method initialize(){
+		
 		abecedario.lista().forEach({
-			clave, valor =>
-			teclas.add(new Tecla(idLetra=clave, position=valor))
-		})
-	}
-	
-	method dibujarTeclado(){
-		teclas.forEach({
-			t => 
-			t.dibujarTecla()
+			letra, posicion =>
+			elementos.add(new CeldaTecla(id=letra, position=posicion))
 		})
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
