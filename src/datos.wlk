@@ -1,7 +1,70 @@
 import wollok.game.*
-object abecedario {
-	const property lista = new Dictionary()
+
+// se encarga de tener todas las palabras validas y la validacion de palabras
+object palabrasValidas{
 	
+	//contiene las palabras validas en listas segun su inicial, para una busqueda mas rapida
+	const matrizPalabras = []
+	//contiene los indices de las listas de palabras que empiezan con la letra correspondiente
+	const posicionesPalabras = new Dictionary() 
+	
+	method initialize(){
+		self.inicializarPosicionesPalabras()
+		self.inicializarMatrizPalabras()
+	}
+	
+	//devuelve una palabra al azar
+	method palabraAleatoria()= matrizPalabras.anyOne().anyOne()
+	
+	// devuelve el indice de la lista de palabras que empiezan con la misma letra que palabra
+	method indiceDelaInicialDeLaPalabra(palabra)= posicionesPalabras.get( palabra.charAt(0) )
+	
+	
+	//devuelve la lista de palabras que empiezan con la misma letra que palabraAValidar
+	method listaDePalabrasConLaMismaInicial(palabraAValidar)= matrizPalabras.get(self.indiceDelaInicialDeLaPalabra(palabraAValidar) )
+	
+	//devuelve true si palabraAValidar existe en la base de datos
+	method validarPalabra(palabraAValidar)= self.listaDePalabrasConLaMismaInicial(palabraAValidar).contains(palabraAValidar)
+	
+	//inicializa los valores de posicionesPalabras
+	method inicializarPosicionesPalabras(){
+		posicionesPalabras.put("q",16)
+		posicionesPalabras.put("w",22)
+		posicionesPalabras.put("e",4)
+		posicionesPalabras.put("r",17)
+		posicionesPalabras.put("t",19)
+		posicionesPalabras.put("y",24)
+		posicionesPalabras.put("u",20)
+		posicionesPalabras.put("i",8)
+		posicionesPalabras.put("o",14)
+		posicionesPalabras.put("p",15)
+		posicionesPalabras.put("a",0)
+		posicionesPalabras.put("s",18)
+		posicionesPalabras.put("d",3)
+		posicionesPalabras.put("f",5)
+		posicionesPalabras.put("g",6)
+		posicionesPalabras.put("h",7)
+		posicionesPalabras.put("j",9)
+		posicionesPalabras.put("k",10)
+		posicionesPalabras.put("l",11)
+		posicionesPalabras.put("z",25)
+		posicionesPalabras.put("x",23)
+		posicionesPalabras.put("c",2)
+		posicionesPalabras.put("v",21)
+		posicionesPalabras.put("b",1)
+		posicionesPalabras.put("n",13)
+		posicionesPalabras.put("m",12)
+	}
+	
+	//inicializa los valores de matrizPalabras
+	method inicializarMatrizPalabras(){
+		//aca hay que poner las listas de las palabras
+	}
+}
+
+// contiene las posiciones de las teclas en el teclado segun que letra represente
+object posicionesTeclas {
+	const property lista = new Dictionary()
 	
 	method initialize(){
 		lista.put("q",game.at(5,6))

@@ -5,7 +5,7 @@ object menuPrincipal {
 	// implementar
 }
 
-
+// es un conjunto de celdas, denominadas elementos, para lograr mostrar la informacion deseada
 class Componente{
 	const elementos = []
 	

@@ -3,6 +3,8 @@ import componentes.*
 import teclado.*
 import timer.*
 
+
+//se encarga de manejar el estado del juego
 object juego{
 	
 	method configuracionInicial(){
