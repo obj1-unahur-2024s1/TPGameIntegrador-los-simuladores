@@ -2,6 +2,7 @@ import datos.*
 import utilidades.*
 import wollok.game.*
 import componentes.*
+import tablero.*
 
 // celda que representa una tecla en el teclado
 class CeldaTecla inherits Celda{
@@ -25,13 +26,14 @@ class CeldaTecla inherits Celda{
 	//agrega el evento correspondiente a la tecla
 	method agregarEvento(){
 		keyboard.letter(id).onPressDo({
-			self.presionar()
+			self.presionar(id)
 		})
 	}
 	
 	//realiza la accion deseada al momento de presionar esta tecla
-	method presionar(){
+	method presionar(id){
 		// manda mensaje a tablero para que se añada la letra
+		tablero.teclaPresionada(id)
 	}
 	
 	//resetea la tecla a su estado inicial
