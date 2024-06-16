@@ -62,6 +62,12 @@ class CeldaEstado inherits Celda{
 		estado = "Inicial"
 	}
 	
+	//cambia el estado al azar
+	method unEstado(){
+		const estados=["Correcto", "Errado", "Inexistente"].anyOne()
+		estado = estados
+	}
+	
 	override method resetear(){}
 }
 
