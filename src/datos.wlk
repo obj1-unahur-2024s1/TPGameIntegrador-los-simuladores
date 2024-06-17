@@ -24,7 +24,7 @@ object palabrasValidas{
 	method listaDePalabrasConLaMismaInicial(palabraAValidar)= matrizPalabras.get(self.indiceDelaInicialDeLaPalabra(palabraAValidar) )
 	
 	//devuelve true si palabraAValidar existe en la base de datos
-	method validarPalabra(palabraAValidar)= self.listaDePalabrasConLaMismaInicial(palabraAValidar).contains(palabraAValidar)
+	method esUnaPalabraValida(palabraAValidar)= self.listaDePalabrasConLaMismaInicial(palabraAValidar).contains(palabraAValidar)
 	
 	//inicializa los valores de posicionesPalabras
 	method inicializarPosicionesPalabras(){
@@ -195,22 +195,22 @@ object posicionesCeldasDelTablero{
 	method inicializarCoordenadasY(){
 		
 		// Hace que el primero intento quede en la coordenada y = 20
-		listaDeCoordenadasY.put(5, 20)
+		listaDeCoordenadasY.put(6, 20)
 		
 		// Hace que el segundo intento quede en la coordenada y = 18
-		listaDeCoordenadasY.put(4, 18)
+		listaDeCoordenadasY.put(5, 18)
 		
 		// Hace que el tercer intento quede en la coordenada y = 16
-		listaDeCoordenadasY.put(3, 16)
+		listaDeCoordenadasY.put(4, 16)
 		
 		// Hace que el cuarto intento quede en la coordenada y = 14
-		listaDeCoordenadasY.put(2, 14)
+		listaDeCoordenadasY.put(3, 14)
 		
 		// Hace que el quinto intento quede en la coordenada y = 12
-		listaDeCoordenadasY.put(1, 12)
+		listaDeCoordenadasY.put(2, 12)
 		
 		// Hace que el sexto intento quede en la coordenada y = 10
-		listaDeCoordenadasY.put(0, 10)
+		listaDeCoordenadasY.put(1, 10)
 	}
 	
 	// Getter para la coordenada "x" de la celda
@@ -257,4 +257,5 @@ object posicionesTeclas {
 		//lista.put("enter",game.at(22,2))
 	}	
 	
+	method posicionAsociadaALaTecla(tecla) = lista.get(tecla)
 }

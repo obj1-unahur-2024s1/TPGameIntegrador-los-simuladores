@@ -13,33 +13,15 @@ object juego{
 	// Variable booleana que indica si inició la partida, por default es falsa
 	// var inicioLaPartida = false
 	
-	/**
-	// Selecciona la dificultad de la nueva partida, 1 para fácil, 2 para difícil
-	method seleccionarDificultad(){
-		keyboard.num1().onPressDo({ self.generarPartidaFacil() })
-		keyboard.num1().onPressDo({ self.generarPartidaDificil() })
-	}
-	*/
 	// Genera una partida fácil, Wordle normal
 	method generarPartidaFacil(){
 		
 		// Evita que se instancien nuevas partidas en mitad de una partida
 		//if( not inicioLaPartida ){
-			partidaActual = new EstadoDelJuego(esPorTiempo = false)
+		partidaActual = new EstadoDelJuego(esPorTiempo = false)
 		//}
 	}
 	
-	/**
-	// Genera una partida difícil, Wordle con 1 minuto
-	method generarPartidaDificil(){
-		
-		// Evita que se instancien nuevas partidas en mitad de una partida
-		if( not inicioLaPartida ){
-			partidaActual = new EstadoDelJuego(esPorTiempo = true)
-			timer.dibujarElementos()
-		}
-	}
-	*/
 	method configuracionInicial(){
 		game.cellSize(24)
 		game.title("Wordle - Wollok Edition")
@@ -48,28 +30,33 @@ object juego{
 		game.boardGround("fondo.png")
 		titulo.dibujarElementos()
 		teclado.dibujarElementos()
-		timer.dibujarElementos()
+		//timer.dibujarElementos()
+		keyboard.del().onPressDo({ tablero.deletePresionado() })
+		keyboard.space().onPressDo({ tablero.espacioPresionado() })
+		keyboard.enter().onPressDo({ tablero.enterPresionado() })
 		self.generarPartidaFacil()
 		game.start()
 	}
 	
-		/**
-	method finalizarPartidaActual(){
-		if ( self.seAcaboElJuego() ){
-			game.clear()
-			inicioLaPartida = false
-			self.configuracionInicial()
-		}
-	}
-	*/
 	// method seAcaboElJuego() = inicioLaPartida and partidaActual.seAcaboElJuego()
 
 	method intentosRestantes() = partidaActual.intentosRestantes()
+	
+	method restarIntento(){
+		partidaActual.restarIntento()
+	}
+	
+	method verificarSiGano(estados){
+		if ( partidaActual.gano(estados) ){
+			console.println("Ganaste :)")
+			
+		}
+	}
 }
 
 class EstadoDelJuego{
 	
-	var intentosRestantes = 4
+	var intentosRestantes = 6
 	
 	const esPorTiempo
 	
@@ -80,6 +67,9 @@ class EstadoDelJuego{
 	method restarIntento(){ intentosRestantes -= 1 }
 	
 	method intentosRestantes() = intentosRestantes
+	
+	// Indica si el estado que obtuvo es el ganador
+	method gano(estados) = estados == ["Correcto", "Correcto", "Correcto", "Correcto", "Correcto"]
 }
 
 

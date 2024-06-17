@@ -47,7 +47,7 @@ object timer inherits Componente{
 	method minuto()= (tiempoRestante.div(60)).toString()     
 	
 	//devuelve las decenas de los segundos restantes en un string
-	method segundo1()= (tiempoRestante.rem(60).div(10)).toString()			// no estan consistentes los calculos pero funcionan bien ,sugiero no tocar
+	method segundo1()= (tiempoRestante.rem(60).div(10)).toString()			
 	
 	//devuelve las unidades de los segundos restantes en un string
 	method segundo2()= (tiempoRestante.rem(60).rem(10)).toString()

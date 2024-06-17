@@ -8,7 +8,7 @@ import tablero.*
 class CeldaTecla inherits Celda{
 	
 	//contiene el estado de la tecla
-	const celdaEstado = new CeldaEstado(id="estadoTecla"+id, position=self.position(), ruta="celdasTeclado/celdaTeclado")
+	const property celdaEstado = new CeldaEstado(id="estadoTecla"+id, position=self.position(), ruta="celdasTeclado/celdaTeclado")
 	
 	//contiene la letra que representa esta tecla
 	const celdaLetra = new CeldaLetra(id="letraTecla"+id, letra=id, position = position)
@@ -50,6 +50,34 @@ object teclado inherits Componente{
 			letra, posicion =>
 			elementos.add(new CeldaTecla(id=letra, position=posicion))
 		})
+	}
+	
+	// Actualiza el estado de las celdas del teclado
+	method actualizarCeldasCorrespondientes(celdasAActualizar, nuevosEstados) {
+		
+		// Genera 5 números
+		(0..4).forEach({
+			
+			//								Primer argumento es la posición de la celda, 							el segundo es su nuevo estado
+			numero => self.actualizarCelda( posicionesTeclas.posicionAsociadaALaTecla( celdasAActualizar.get(numero) ), nuevosEstados.get(numero) )
+		})
+	}
+	
+	// Actualiza el estado de una celda dada su posición
+	method actualizarCelda(posicion, nuevoEstado){
+		
+		// getObjectsIn devuelve la letra y la celda, get(0) devuelve la celda
+		const celdaAModificar = game.getObjectsIn( posicion ).get(0)
+		
+		if(nuevoEstado == "Correcto"){
+			celdaAModificar.posicionCorrecta()
+		}
+		else if( nuevoEstado == "Errado" ){
+			celdaAModificar.posicionEquivocada()
+		}
+		else{
+			celdaAModificar.noLaContiene()
+		}
 	}
 }
 
