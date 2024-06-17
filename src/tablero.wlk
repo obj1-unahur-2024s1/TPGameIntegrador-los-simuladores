@@ -75,10 +75,6 @@ object tablero{
 		}
 	}
 	
-	method espacioPresionado(){
-		instrucciones.mostrar()
-	}
-	
 	/** METODOS PARA LOS ESTADOS */
 	
 	// Informa el estado de una letra dada
@@ -222,32 +218,3 @@ object tablero{
 	}
 }
 
-object instrucciones{
-	
-	// Controla si están en pantalla
-	var estanEnPantalla = false
-	
-	method position() = game.at(5, 3)
-		
-	method image() = "instrucciones.png"
-	
-	method mostrar(){
-		
-		// Las muestra si no están en pantalla
-		if (not estanEnPantalla){
-			
-			// cambia su estado para evitar que se vuelvan a ver
-			estanEnPantalla = not estanEnPantalla
-			
-			game.addVisual(self)
-		}
-		
-		// Las saca si están en pantalla
-		else{
-			game.removeVisual(self)
-			
-			// cambia su estado para evitar que se vuelvan a ver
-			estanEnPantalla = not estanEnPantalla
-		}
-	}
-}

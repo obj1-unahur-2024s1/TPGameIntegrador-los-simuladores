@@ -4,22 +4,16 @@ import teclado.*
 import timer.*
 import titulo.*
 import tablero.*
+import utilidades.*
 
 //se encarga de manejar el estado del juego
-object juego{
+object juego {
 	// Variable que almacena los datos de la partida actual para volver a jugar
-	var partidaActual = null
-	
-	// Variable booleana que indica si inició la partida, por default es falsa
-	// var inicioLaPartida = false
-	
+	var partidaActual = null	
 	// Genera una partida fácil, Wordle normal
 	method generarPartidaFacil(){
-		
-		// Evita que se instancien nuevas partidas en mitad de una partida
-		//if( not inicioLaPartida ){
+
 		partidaActual = new EstadoDelJuego(esPorTiempo = false)
-		//}
 	}
 	
 	method configuracionInicial(){
@@ -28,11 +22,11 @@ object juego{
 		game.width(30)
 		game.height(28)
 		game.boardGround("fondo.png")
-		titulo.dibujarElementos()
-		teclado.dibujarElementos()
+		//titulo.dibujarElementos()
+		//teclado.dibujarElementos()
 		//timer.dibujarElementos()
 		keyboard.del().onPressDo({ tablero.deletePresionado() })
-		keyboard.space().onPressDo({ tablero.espacioPresionado() })
+		keyboard.space().onPressDo({ instrucciones.habilitar() })
 		keyboard.enter().onPressDo({ tablero.enterPresionado() })
 		self.generarPartidaFacil()
 		game.start()
@@ -50,6 +44,20 @@ object juego{
 		if ( partidaActual.gano(estados) ){
 			console.println("Ganaste :)")
 			
+		}
+	}
+}
+
+object instrucciones inherits Celda(position = game.at(5,3), id = "instrucciones"){
+	override method image() = "instrucciones.png"
+	override method resetear(){}
+	
+	method habilitar(){
+		if(self.estaDibujado()){
+			self.borrar()
+		}
+		else{
+			self.dibujar()
 		}
 	}
 }
