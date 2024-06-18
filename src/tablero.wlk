@@ -10,7 +10,7 @@ object tablero{
 	const intentoActual = []
 	
 	// La palabra a adivinar
-	var property palabraAAdivinar = ""
+	var property palabraAAdivinar = null
 	
 	method initialize(){
 		self.nuevaPalabraAAdivinar()	

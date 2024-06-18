@@ -9,11 +9,18 @@ import utilidades.*
 //se encarga de manejar el estado del juego
 object juego {
 	// Variable que almacena los datos de la partida actual para volver a jugar
-	var partidaActual = null	
+	var partidaActual = null
+	
+	// Variable booleana que indica si inició la partida, por default es falsa
+	// var inicioLaPartida = false
+	
 	// Genera una partida fácil, Wordle normal
 	method generarPartidaFacil(){
-
+		
+		// Evita que se instancien nuevas partidas en mitad de una partida
+		//if( not inicioLaPartida ){
 		partidaActual = new EstadoDelJuego(esPorTiempo = false)
+		//}
 	}
 	
 	method configuracionInicial(){
@@ -22,16 +29,17 @@ object juego {
 		game.width(30)
 		game.height(28)
 		game.boardGround("fondo.png")
-		//titulo.dibujarElementos()
-		//teclado.dibujarElementos()
-		//timer.dibujarElementos()
-		keyboard.del().onPressDo({ tablero.deletePresionado() })
-		keyboard.space().onPressDo({ instrucciones.habilitar() })
-		keyboard.enter().onPressDo({ tablero.enterPresionado() })
+		titulo.dibujarElementos()
+		teclado.dibujarElementos()
+		timer.dibujarElementos()
+		keyboard.space().onPressDo({
+			instrucciones.habilitar()
+		})
 		self.generarPartidaFacil()
 		game.start()
 	}
 	
+		
 	// method seAcaboElJuego() = inicioLaPartida and partidaActual.seAcaboElJuego()
 
 	method intentosRestantes() = partidaActual.intentosRestantes()

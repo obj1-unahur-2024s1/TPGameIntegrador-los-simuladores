@@ -11,8 +11,20 @@ class CeldaTecla inherits Celda{
 	const property celdaEstado = new CeldaEstado(id="estadoTecla"+id, position=self.position(), ruta="celdasTeclado/celdaTeclado")
 	
 	//contiene la letra que representa esta tecla
-	const celdaLetra = new CeldaLetra(id="letraTecla"+id, letra=id, position = position)
+	const celdaLetra = new CeldaLetra(id="letraTecla"+id, letra=id, position = position) 
 	
+	const letraRepresentada = self.asd()
+	
+	const input = new Key(keyCodes=[letraRepresentada])
+	
+	method asd(){
+		if(id != "Delete" and id != "Enter"){
+			return "Key"+id.toUpperCase()
+		}
+		else{
+			return id
+		}
+	}
 	
 	override method image(){}
 	
@@ -25,15 +37,20 @@ class CeldaTecla inherits Celda{
 	
 	//agrega el evento correspondiente a la tecla
 	method agregarEvento(){
-		keyboard.letter(id).onPressDo({
+		input.onPressDo({
 			self.presionar(id)
 		})
 	}
 	
 	//realiza la accion deseada al momento de presionar esta tecla
-	method presionar(id){
-		// manda mensaje a tablero para que se añada la letra
-		tablero.teclaPresionada(id)
+	method presionar(teclaPresionada){
+		if("Enter" == teclaPresionada){
+			tablero.enterPresionado()
+		}else if("Delete" == teclaPresionada){
+			tablero.deletePresionado()
+		}else{
+			tablero.teclaPresionada(teclaPresionada)
+		}
 	}
 	
 	//resetea la tecla a su estado inicial

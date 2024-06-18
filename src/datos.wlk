@@ -246,7 +246,7 @@ object posicionesTeclas {
 		lista.put("k",game.at(20,4))
 		lista.put("l",game.at(22,4))
 		
-		//lista.put("delete",game.at(5,2))
+		lista.put("Delete",game.at(5,2))
 		lista.put("z",game.at(8,2))
 		lista.put("x",game.at(10,2))
 		lista.put("c",game.at(12,2))
@@ -254,7 +254,7 @@ object posicionesTeclas {
 		lista.put("b",game.at(16,2))
 		lista.put("n",game.at(18,2))
 		lista.put("m",game.at(20,2))
-		//lista.put("enter",game.at(22,2))
+		lista.put("Enter",game.at(22,2))
 	}	
 	
 	method posicionAsociadaALaTecla(tecla) = lista.get(tecla)
