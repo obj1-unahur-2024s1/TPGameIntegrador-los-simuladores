@@ -9,7 +9,7 @@ object menuPrincipal {
 class Componente{
 	const elementos = []
 	
-	method dibujarElementos(){
+	method agregarElementos(){
 	 	elementos.forEach({
 	 		e => 
 	 		e.dibujar()
@@ -30,4 +30,5 @@ class Componente{
 	 	})
 	}
 }
+
 

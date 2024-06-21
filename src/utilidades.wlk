@@ -9,7 +9,7 @@ class Celda{
 	//id unico para poder identificar celdas en particular
 	const property id
 	
-	method image() 
+	method image()
 	
 	//dibuja esta celda si no esta ya dibujada
 	method dibujar(){

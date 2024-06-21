@@ -15,9 +15,7 @@ class CeldaTitulo inherits Celda{
 		id="letraTitulo"+id, letra=id.take(1), position = position
 	)
 	
-	override method image(){
-		
-	}
+	override method image(){}
 	
 	//dibuja el titulo wollok con distintos estados 
 	override method dibujar(){

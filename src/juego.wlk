@@ -5,9 +5,12 @@ import timer.*
 import titulo.*
 import tablero.*
 import utilidades.*
+import pantallas.*
 
 //se encarga de manejar el estado del juego
 object juego {
+	
+	var pantallaActual = pantallaInicio
 	// Variable que almacena los datos de la partida actual para volver a jugar
 	var partidaActual = null
 	
@@ -29,13 +32,14 @@ object juego {
 		game.width(30)
 		game.height(28)
 		game.boardGround("fondo.png")
-		titulo.dibujarElementos()
-		teclado.dibujarElementos()
-		timer.dibujarElementos()
-		keyboard.space().onPressDo({
-			instrucciones.habilitar()
-		})
-		self.generarPartidaFacil()
+		pantallaActual.dibujar()
+		//titulo.agregarElementos()
+		//teclado.agregarElementos()
+		//timer.agregarElementos()
+		//keyboard.space().onPressDo({
+		//instrucciones.habilitar()
+		//})
+		//self.generarPartidaFacil()
 		game.start()
 	}
 	

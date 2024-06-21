@@ -13,11 +13,9 @@ class CeldaTecla inherits Celda{
 	//contiene la letra que representa esta tecla
 	const celdaLetra = new CeldaLetra(id="letraTecla"+id, letra=id, position = position) 
 	
-	const letraRepresentada = self.asd()
+	const input = new Key(keyCodes=[self.keyCodeInput()])
 	
-	const input = new Key(keyCodes=[letraRepresentada])
-	
-	method asd(){
+	method keyCodeInput(){
 		if(id != "Delete" and id != "Enter"){
 			return "Key"+id.toUpperCase()
 		}
