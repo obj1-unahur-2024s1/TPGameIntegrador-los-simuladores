@@ -161,63 +161,18 @@ object palabrasValidas{
 // Diccionario que mapea cada número de celda con una coordenada "x" de una letra del teclado: así, las 5 letras del tablero quedan "por encima" de las letras "x" a "n" del teclado
 object posicionesCeldasDelTablero{
 	
-	// Asocia una coordenada "x" a cada celda de un intento
-	const listaDeCoordenadasX = new Dictionary()
-	
-	// Asocia una coordenada "y" a cada celda de un intento
-	const listaDeCoordenadasY = new Dictionary()
+	const property posiciones = new Dictionary()
 	
 	method initialize(){
 			
-		self.inicializarCoordenadasX()
-		
-		self.inicializarCoordenadasY()
+		posiciones.put(0, [game.at(10,20),game.at(12,20),game.at(14,20),game.at(16,20),game.at(18,20)] )
+		posiciones.put(1, [game.at(10,18),game.at(12,18),game.at(14,18),game.at(16,18),game.at(18,18)] )
+		posiciones.put(2, [game.at(10,16),game.at(12,16),game.at(14,16),game.at(16,16),game.at(18,16)] )
+		posiciones.put(3, [game.at(10,14),game.at(12,14),game.at(14,14),game.at(16,14),game.at(18,14)] )
+		posiciones.put(4, [game.at(10,12),game.at(12,12),game.at(14,12),game.at(16,12),game.at(18,12)] )
+		posiciones.put(5, [game.at(10,10),game.at(12,10),game.at(14,10),game.at(16,10),game.at(18,10)] )
+			
 	}
-	
-	method inicializarCoordenadasX(){
-		
-		// Hace que las 6 primeras celdas del tablero queden por encima de la letra "x"
-		listaDeCoordenadasX.put(0, 10)
-		
-		// Hace que las 6 segundas celdas del tablero queden por encima de la letra "c"
-		listaDeCoordenadasX.put(1, 12)
-		
-		// Hace que las 6 terceras celdas del tablero queden por encima de la letra "v"
-		listaDeCoordenadasX.put(2, 14)
-		
-		// Hace que las 6 cuartas celdas del tablero queden por encima de la letra "b"
-		listaDeCoordenadasX.put(3, 16)
-		
-		// Hace que las 6 últimas celdas del tablero queden por encima de la letra "n"
-		listaDeCoordenadasX.put(4, 18)
-	}
-	
-	method inicializarCoordenadasY(){
-		
-		// Hace que el primero intento quede en la coordenada y = 20
-		listaDeCoordenadasY.put(6, 20)
-		
-		// Hace que el segundo intento quede en la coordenada y = 18
-		listaDeCoordenadasY.put(5, 18)
-		
-		// Hace que el tercer intento quede en la coordenada y = 16
-		listaDeCoordenadasY.put(4, 16)
-		
-		// Hace que el cuarto intento quede en la coordenada y = 14
-		listaDeCoordenadasY.put(3, 14)
-		
-		// Hace que el quinto intento quede en la coordenada y = 12
-		listaDeCoordenadasY.put(2, 12)
-		
-		// Hace que el sexto intento quede en la coordenada y = 10
-		listaDeCoordenadasY.put(1, 10)
-	}
-	
-	// Getter para la coordenada "x" de la celda
-	method coordenadaXAsociadaALaCeldaNro(numeroDeLetra) = listaDeCoordenadasX.get(numeroDeLetra)
-	
-	// Getter para la coordenada "y" de la celda
-	method coordenadaYAsociadaALaCeldaNro(numeroDeIntento) = listaDeCoordenadasY.get(numeroDeIntento)
 }
 
 // contiene las posiciones de las teclas en el teclado segun que letra represente
@@ -254,8 +209,7 @@ object posicionesTeclas {
 		lista.put("b",game.at(16,2))
 		lista.put("n",game.at(18,2))
 		lista.put("m",game.at(20,2))
-		lista.put("Enter",game.at(22,2))
+		lista.put("Enter",game.at(23,2))
 	}	
 	
-	method posicionAsociadaALaTecla(tecla) = lista.get(tecla)
 }

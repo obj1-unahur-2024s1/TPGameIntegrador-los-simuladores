@@ -7,20 +7,22 @@ import tablero.*
 // celda que representa una tecla en el teclado
 class CeldaTecla inherits Celda{
 	
+	const property teclaQueRepresenta
+	
 	//contiene el estado de la tecla
-	const property celdaEstado = new CeldaEstado(id="estadoTecla"+id, position=self.position(), ruta="celdasTeclado/celdaTeclado")
+	const property celdaEstado = new CeldaEstado(id="estadoTecla"+teclaQueRepresenta, position=self.position(), ruta="celdasTeclado/celdaTeclado")
 	
 	//contiene la letra que representa esta tecla
-	const celdaLetra = new CeldaLetra(id="letraTecla"+id, letra=id, position = position) 
+	const celdaLetra = new CeldaLetra(id="letraTecla"+teclaQueRepresenta, letra=teclaQueRepresenta, position = position) 
 	
 	const input = new Key(keyCodes=[self.keyCodeInput()])
 	
 	method keyCodeInput(){
-		if(id != "Delete" and id != "Enter"){
-			return "Key"+id.toUpperCase()
+		if(teclaQueRepresenta != "Delete" and teclaQueRepresenta != "Enter"){
+			return "Key"+teclaQueRepresenta.toUpperCase()
 		}
 		else{
-			return id
+			return teclaQueRepresenta
 		}
 	}
 	
@@ -36,7 +38,7 @@ class CeldaTecla inherits Celda{
 	//agrega el evento correspondiente a la tecla
 	method agregarEvento(){
 		input.onPressDo({
-			self.presionar(id)
+			self.presionar(teclaQueRepresenta)
 		})
 	}
 	
@@ -55,6 +57,7 @@ class CeldaTecla inherits Celda{
 	override method resetear(){
 		celdaEstado.inicial()
 	}
+	
 }
 
 object teclado inherits Componente{ 
@@ -63,50 +66,13 @@ object teclado inherits Componente{
 		
 		posicionesTeclas.lista().forEach({
 			letra, posicion =>
-			elementos.add(new CeldaTecla(id=letra, position=posicion))
+			elementos.add(new CeldaTecla(teclaQueRepresenta=letra, position=posicion))
+			console.println(letra)
 		})
+		elementos.get(0).celdaEstado().estado("Delete")
+		elementos.get(1).celdaEstado().estado("Enter")	
 	}
 	
-	// Actualiza el estado de las celdas del teclado
-	method actualizarCeldasCorrespondientes(celdasAActualizar, nuevosEstados) {
-		
-		// Genera 5 números
-		(0..4).forEach({
-			
-			//								Primer argumento es la posición de la celda, 							el segundo es su nuevo estado
-			numero => self.actualizarCelda( posicionesTeclas.posicionAsociadaALaTecla( celdasAActualizar.get(numero) ), nuevosEstados.get(numero) )
-		})
-	}
+	method teclaQueRepresentaALaLetra(letra)= elementos.find({ tecla => tecla.teclaQueRepresenta() == letra })
 	
-	// Actualiza el estado de una celda dada su posición
-	method actualizarCelda(posicion, nuevoEstado){
-		
-		// getObjectsIn devuelve la letra y la celda, get(0) devuelve la celda
-		const celdaAModificar = game.getObjectsIn( posicion ).get(0)
-		
-		if(nuevoEstado == "Correcto"){
-			celdaAModificar.posicionCorrecta()
-		}
-		else if( nuevoEstado == "Errado" ){
-			celdaAModificar.posicionEquivocada()
-		}
-		else{
-			celdaAModificar.noLaContiene()
-		}
-	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -32,9 +32,10 @@ object juego {
 		game.width(30)
 		game.height(28)
 		game.boardGround("fondo.png")
-		pantallaActual.dibujar()
-		//titulo.agregarElementos()
-		//teclado.agregarElementos()
+		//pantallaActual.dibujar()
+		titulo.agregarElementos()
+		teclado.agregarElementos()
+		tablero.agregarElementos()
 		//timer.agregarElementos()
 		//keyboard.space().onPressDo({
 		//instrucciones.habilitar()

@@ -7,7 +7,7 @@ class Celda{
 	const property position
 	
 	//id unico para poder identificar celdas en particular
-	const property id
+	const property id = ""
 	
 	method image()
 	
@@ -62,6 +62,10 @@ class CeldaEstado inherits Celda{
 		estado = "Inicial"
 	}
 	
+	method estado(nuevoEstado){
+		estado = nuevoEstado
+	}
+	
 	//cambia el estado al azar
 	method unEstado(){
 		const estados=["Correcto", "Errado", "Inexistente"].anyOne()
@@ -75,12 +79,14 @@ class CeldaEstado inherits Celda{
 class CeldaLetra inherits Celda{
 	
 	//contiene la letra que se quiere dibujar
-	const property letra
+	var property letra
 	
 	//devuelve la imagen de la letra a dibujar
 	override method image()= "letras/"+letra+".png"
 	
-	override method resetear(){}
+	override method resetear(){
+		letra = "vacio"
+	}
 	
 }
 
