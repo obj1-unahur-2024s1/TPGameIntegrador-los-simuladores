@@ -15,8 +15,10 @@ class CeldaTecla inherits Celda{
 	//contiene la letra que representa esta tecla
 	const celdaLetra = new CeldaLetra(id="letraTecla"+teclaQueRepresenta, letra=teclaQueRepresenta, position = position) 
 	
+	// contiene el input de esta tecla
 	const input = new Key(keyCodes=[self.keyCodeInput()])
 	
+	// devuelve el keyCode apropiado segun la tecla que se quiera representar
 	method keyCodeInput(){
 		if(teclaQueRepresenta != "Delete" and teclaQueRepresenta != "Enter"){
 			return "Key"+teclaQueRepresenta.toUpperCase()
@@ -73,6 +75,7 @@ object teclado inherits Componente{
 		elementos.get(1).celdaEstado().estado("Enter")	
 	}
 	
+	// devuelve la tecla que representa la letra deseada
 	method teclaQueRepresentaALaLetra(letra)= elementos.find({ tecla => tecla.teclaQueRepresenta() == letra })
 	
 }

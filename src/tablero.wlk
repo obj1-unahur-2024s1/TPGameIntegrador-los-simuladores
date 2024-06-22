@@ -7,22 +7,22 @@ import utilidades.*
 
 object tablero inherits Componente{
 	
+	// indica el intento en el que se encuentra el jugador
 	var numeroDeIntentoActual = 0
 	
 	// La palabra a adivinar
 	var palabraAAdivinar = null
 	
+	// indica si el jugador gano la partida
 	var property gano = false
+	
 	
 	method initialize(){
 		self.nuevaPalabraAAdivinar()
 		self.agregarIntentosAlTablero()
-		
-		elementos.forEach({
-			e => e.inicializar()
-		})
 	}
 	
+	// Devuelve el intento en el que encuentra el jugador
 	method intentoActual()= elementos.get(numeroDeIntentoActual)
 	
 	// Crea una nueva palabra a adivinar
@@ -32,6 +32,7 @@ object tablero inherits Componente{
 	
 	/**			METODOS PARA LAS TECLAS		 */
 	
+	//Agrega la letra que fue presionada al intento actual 
 	method teclaPresionada(tecla){
 		if(numeroDeIntentoActual < 6 ){
 			self.intentoActual().escribir(tecla)
@@ -39,14 +40,14 @@ object tablero inherits Componente{
 	}
 	
 	
-	// Maneja lo que sucede cuando se aprieta la tecla de borrar
+	// Borra la ultima letra del intento actual
 	method deletePresionado(){
 		if(numeroDeIntentoActual < 6 ){
 			self.intentoActual().borrarUltimaLetra()
 		}
 	}
 	
-	// Maneja lo que sucede cuando se aprieta la tecla enter
+	// Se encarga de validar la palabra cuando el intento esta completo y a palabra es valida, y de verificar si gano
 	method enterPresionado(){
 		if(numeroDeIntentoActual < 6 and self.intentoActual().estaCompleto()){
 			self.intentoActual().validarIntento(palabraAAdivinar)
@@ -57,6 +58,7 @@ object tablero inherits Componente{
 		}
 	}
 	
+	//verifica si el jugador gano. si gano, muestra la pantalla de ganar, sino, la de perder
 	method verificarSiGano(){
 		if(not gano and numeroDeIntentoActual == 5){
 			//pantallaPerdiste
@@ -114,7 +116,7 @@ class Intento{
 	var palabraQueRepresenta = ""
 	var property esValido = false
 	
-	method inicializar(){
+	method initialize(){
 		posicionesCeldasDelTablero.posiciones().get(numeroIntento).forEach({
 			posicion =>
 			celdasIntento.add(new CeldaIntento(position = posicion, ordenEnIntento = celdasIntento.size()))
@@ -123,10 +125,11 @@ class Intento{
 	
 	method dibujar(){
 		celdasIntento.forEach({
-			celda => celda.dibujar()
+			celdaIntento => celdaIntento.dibujar()
 		})
 	}
 	
+	// Agregua la letra al intento
 	method escribir(letra){
 		if(celdaIntentoActual < 5){
 			celdasIntento.get(celdaIntentoActual).actualizarLetra(letra)
@@ -138,6 +141,7 @@ class Intento{
 		
 	}
 	
+	// Borra la ultima letra del intento
 	method borrarUltimaLetra(){
 		if(celdaIntentoActual > 0){
 			celdaIntentoActual = celdaIntentoActual - 1
@@ -146,6 +150,8 @@ class Intento{
 		palabraQueRepresenta = palabraQueRepresenta.take(celdaIntentoActual)
 	}
 	
+	
+	// valida el intento
 	method validarIntento(palabraCorrecta){
 		if(not palabrasValidas.esUnaPalabraValida(palabraQueRepresenta)){
 			self.mostrarQueLaPalabraNoEsValida()
@@ -155,6 +161,7 @@ class Intento{
 		}
 	}
 	
+	//verifica si la palabra es la correcta, y si no es, actualiza las celdas estado de las letras correspondientes
 	method verificarAciertos(palabraCorrecta){
 			
 		if(palabraQueRepresenta == palabraCorrecta){
@@ -165,6 +172,7 @@ class Intento{
 		}
 	}
 	
+	// actualiza las celdas estado de las letras correspondientes
 	method actualizarCeldasEstado(palabraCorrecta){
 		
 		celdasIntento.forEach({
@@ -183,17 +191,20 @@ class Intento{
 		})	
 	}
 	
+	// Avisa que la palabra escrita no es valida
 	method mostrarQueLaPalabraNoEsValida(){
 		game.addVisual(avisoPalabraNoValida)
 		game.schedule(2000, {=> game.removeVisual(avisoPalabraNoValida)})
 	}
 	
+	//cambia a correctas todas las celdas del intento
 	method ponerTodasCorrectas(){
 		celdasIntento.forEach({
 			celda => celda.posicionCorrecta()
 		})
 	}
-
+	
+	//indica si el intento esta completo
 	method estaCompleto()=	celdaIntentoActual == 5	
 }
 
