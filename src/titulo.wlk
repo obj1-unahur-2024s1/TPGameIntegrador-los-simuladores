@@ -35,8 +35,8 @@ object posicionesLetrasTitulo {
 		lista.put("w",game.at(12,25))
 		lista.put("o",game.at(14,25))
 		lista.put("l",game.at(16,25))
-		lista.put("l",game.at(12,23))
-		lista.put("o",game.at(14,23))
+		lista.put("l1",game.at(12,23))
+		lista.put("o1",game.at(14,23))
 		lista.put("k",game.at(16,23))
 	}	
 }
@@ -45,7 +45,7 @@ object titulo inherits Componente{
 	method initialize(){
 		posicionesLetrasTitulo.lista().forEach({
 			letra, posicion =>
-			elementos.add(new CeldaTitulo(letra=letra, position=posicion))
+			elementos.add(new CeldaTitulo(letra=letra.take(1), position=posicion))
 		})
 	}
 
