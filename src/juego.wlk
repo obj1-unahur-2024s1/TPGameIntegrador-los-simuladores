@@ -18,7 +18,7 @@ object juego {
 		game.width(30)
 		game.height(28)
 		game.boardGround("fondo.png")
-		pantallaActual.dibujar()
+		pantallaActual.dibujarPantalla()
 		//titulo.agregarElementos()
 		//teclado.agregarElementos()
 		//tablero.agregarElementos()
@@ -43,7 +43,7 @@ object juego {
 	method cambiarPantalla(nuevaPantalla){
 		pantallaActual.eliminar()
 		pantallaActual = nuevaPantalla
-		pantallaActual.dibujar()
+		pantallaActual.dibujarPantalla()
 		self.activarInstrucciones()
 	}
 }

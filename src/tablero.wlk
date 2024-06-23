@@ -70,8 +70,7 @@ object tablero inherits Componente{
 	method verificarSiGano(){
 		if(not gano and numeroDeIntentoActual == 5){
 			game.schedule(1000, {juego.cambiarPantalla(pantallaPerdedor)}) 
-		}else{
-			gano = true
+		}else if(gano){
 			game.schedule(1000, {juego.cambiarPantalla(pantallaGanador)})
 		}
 	}
@@ -124,6 +123,7 @@ class Intento{
 	var celdaIntentoActual = 0
 	var palabraQueRepresenta = ""
 	var property esValido = false
+	const letrasMarcadas = #{}
 	
 	method initialize(){
 		posicionesCeldasDelTablero.posiciones().get(numeroIntento).forEach({
@@ -143,6 +143,7 @@ class Intento{
 		celdaIntentoActual = 0
 		palabraQueRepresenta = ""
 		esValido = false
+		letrasMarcadas.clear()
 		
 	}
 	
@@ -189,6 +190,12 @@ class Intento{
 		}
 	}
 	
+	method aniadirLetraMarcada(letra){
+		letrasMarcadas.add(letra)
+	}
+	
+	method esLetraMarcada(letra)= letrasMarcadas.contains(letra)
+	
 	// actualiza las celdas estado de las letras correspondientes
 	method actualizarCeldasEstado(palabraCorrecta){
 		
@@ -197,13 +204,14 @@ class Intento{
 			const letra = celda.letraQueRepresenta().toString()
 			
 			// La letra esta en la posicion correcta
-			if( letra == palabraCorrecta.charAt(celda.ordenEnIntento() ) ){
+			if( letra == palabraCorrecta.charAt(celda.ordenEnIntento() ) and not self.esLetraMarcada(letra) ){
+				self.aniadirLetraMarcada(letra)
 				celda.celdaEstado().posicionCorrecta()
 				teclado.teclaQueRepresentaALaLetra(letra).celdaEstado().posicionCorrecta()
 			}
 			
 			// La letra esta en la posicion incorrecta
-			else if( palabraCorrecta.contains( letra ) ){
+			else if( palabraCorrecta.contains( letra ) and not self.esLetraMarcada(letra) ){
 				celda.celdaEstado().posicionEquivocada()
 				teclado.teclaQueRepresentaALaLetra(letra).celdaEstado().posicionEquivocada()
 			}
@@ -211,15 +219,16 @@ class Intento{
 			//	La palabra a adivinar no contiene la letra
 			else{
 				celda.celdaEstado().noLaContiene()
-				teclado.teclaQueRepresentaALaLetra(letra).celdaEstado().noLaContiene()
+				if(not self.esLetraMarcada(letra)){
+					teclado.teclaQueRepresentaALaLetra(letra).celdaEstado().noLaContiene()
+				}
 			}
 		})	
 	}
 	
 	// Avisa que la palabra escrita no es valida
 	method mostrarQueLaPalabraNoEsValida(){
-		game.addVisual(avisoPalabraNoValida)
-		game.schedule(2000, {=> game.removeVisual(avisoPalabraNoValida)})
+		avisoPalabraNoValida.avisar()
 	}
 	
 	//cambia a correctas todas las celdas del intento
@@ -236,5 +245,10 @@ class Intento{
 object avisoPalabraNoValida inherits Celda(position = game.at(11, 22)){
 	override method image() ="avisoPalabraNoValida.png"
  	override method resetear(){}
+ 	
+ 	method avisar(){
+ 		self.dibujar()
+		game.schedule(2000, {=>self.borrar()})
+ 	}
 }
 

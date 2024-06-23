@@ -10,8 +10,17 @@ import juego.*
 class Pantalla{
 	
 	const componentes = []
+	const tiempoAOtraPantalla = 2000
+	const esDeTransicion
 	
-	method dibujar(){
+	method dibujarPantalla(){
+		self.dibujarComponentes()
+		if(esDeTransicion){
+			self.pasarAPantallaDificultad()
+		}
+	}
+	
+	method dibujarComponentes(){
 		componentes.forEach({
 			componente => componente.agregarElementos()
 		})
@@ -26,37 +35,43 @@ class Pantalla{
 	}
 	
 	method resetear(){}
+	
+	method pasarAPantallaDificultad(){
+		game.schedule(tiempoAOtraPantalla, {juego.cambiarPantalla(pantallaDificultad)})
+	}
 }
 
 class CeldaPantalla inherits Celda{
 	const imagen
 	
-	override method image()= "pantallas/pantalla"+imagen+".png"
+	override method image()= "pantallas/"+imagen+".png"
 	override method resetear(){}
 }
 
-
-
-object pantallaInicio inherits Pantalla{
+object pantallaDificultad inherits Pantalla(esDeTransicion = false){
 	method initialize(){
-		componentes.add(new Componente(elementos = [new CeldaPantalla(imagen="Inicio", id= "celdaPantallaInicio", position = game.at(0,0))]))
+		componentes.add(new Componente(elementos = [new CeldaPantalla(imagen="pantallaDificultad", id= "celdaPantallaInicio", position = game.at(0,0))]))		
 		componentes.add(inputsMenus)
 	}
 }
 
-object pantallaGanador inherits Pantalla{
-	
+object pantallaInicio inherits Pantalla(esDeTransicion = true, tiempoAOtraPantalla = 10000){
 	method initialize(){
-		componentes.add(new Componente(elementos = [new CeldaPantalla(imagen="Ganador", id= "celdaPantallaInicio", position = game.at(0,0))]))
-		componentes.add(inputsMenus)
+		componentes.add(new Componente(elementos = [new CeldaPantalla(imagen="pantallaInicio", id= "celdaPantallaInicio", position = game.at(0,0))]))		
 	}
 }
 
-object pantallaPerdedor inherits Pantalla{
+object pantallaGanador inherits Pantalla(esDeTransicion = true){
 	
 	method initialize(){
-		componentes.add(new Componente(elementos = [new CeldaPantalla(imagen="Perdedor", id= "celdaPantallaInicio", position = game.at(0,0))]))
-		componentes.add(inputsMenus)
+		componentes.add(new Componente(elementos = [new CeldaPantalla(imagen="pantallaGanador", id= "celdaPantallaInicio", position = game.at(0,0))]))
+	}
+}
+
+object pantallaPerdedor inherits Pantalla(esDeTransicion = true){
+	
+	method initialize(){
+		componentes.add(new Componente(elementos = [new CeldaPantalla(imagen="pantallaPerdedor", id= "celdaPantallaInicio", position = game.at(0,0))]))
 	}
 }
 
@@ -64,22 +79,23 @@ object inputsMenus inherits Componente{
 	override method agregarElementos(){
 		
 		// iniciar partida facil
-		keyboard.num1().onPressDo( {
+		keyboard.f().onPressDo( {
 			pantallaJuego.esPorTiempo(false)
-			juego.cambiarPantalla(pantallaJuego)
+			game.schedule(500, {juego.cambiarPantalla(pantallaJuego)})
+			
 		} )
 		
 		//iniciar partida dificil
-		keyboard.num2().onPressDo( {
+		keyboard.d().onPressDo( {
 			pantallaJuego.esPorTiempo(true)
-			juego.cambiarPantalla(pantallaJuego)
+			game.schedule(500, {juego.cambiarPantalla(pantallaJuego)})
 		}/**iniciar partida dificil*/)
 	}
 }
 
-object pantallaJuego inherits Pantalla(componentes = [tablero,teclado,titulo,timer]){
+object pantallaJuego inherits Pantalla(esDeTransicion = false, componentes = [tablero,teclado,titulo,timer,new Componente(elementos = [new CeldaPantalla(imagen="infoInstrucciones", id= "celdaPantallaInicio", position = game.at(11,0))])]){
 	var property esPorTiempo = false
-	override method dibujar(){
+	override method dibujarPantalla(){
 		super()
 		timer.habilitarSiEsNecesario(esPorTiempo)
 	}

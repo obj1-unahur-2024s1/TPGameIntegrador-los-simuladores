@@ -87,3 +87,5 @@ object teclado inherits Componente{
 	method teclaQueRepresentaALaLetra(letra)= elementos.find({ tecla => tecla.teclaQueRepresenta() == letra })
 	
 }
+
+
