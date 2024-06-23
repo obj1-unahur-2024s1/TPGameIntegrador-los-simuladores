@@ -47,7 +47,6 @@ object tablero inherits Componente{
 		}
 	}
 	
-	
 	// Borra la ultima letra del intento actual
 	method deletePresionado(){
 		if(numeroDeIntentoActual < 6 ){
@@ -89,8 +88,8 @@ object tablero inherits Componente{
 
 class CeldaIntento inherits Celda{
 		
-	const property celdaEstado = new CeldaEstado(id="celdaEstado", position=position, ruta="celdasPalabra/celda")
-	const celdaLetra = new CeldaLetra(id="celdaLetra", letra="vacio", position = position)
+	const property celdaEstado = new CeldaEstado(position=position, ruta="celdasPalabra/celda")
+	const celdaLetra = new CeldaLetra(letra="vacio", position = position)
 	const property ordenEnIntento 
 	
 	method letraQueRepresenta()= celdaLetra.letra()
@@ -109,6 +108,7 @@ class CeldaIntento inherits Celda{
 		celdaLetra.dibujar()
 	}
 	override method image(){}
+	
 	override method resetear(){
 		self.borrarLetra()
 		celdaEstado.resetear()
@@ -190,11 +190,32 @@ class Intento{
 		}
 	}
 	
+	//añade una letra al conjunto de marcadas
 	method aniadirLetraMarcada(letra){
 		letrasMarcadas.add(letra)
 	}
 	
+	//indica si una letra ya fue marcada
 	method esLetraMarcada(letra)= letrasMarcadas.contains(letra)
+	
+	// actualiza las celdas incorrectas anteriores de la misma letra que la celda correcta, para que muestren que son inexistentes
+	method actualizarCeldasAnterioresIncorrectas(celdaCorrecta){
+		if(self.existeCeldaRepetida(celdaCorrecta) ){
+			self.celdaRepetida(celdaCorrecta).celdaEstado().noLaContiene()
+		}
+	}
+	
+	//devuelve si hay una celda repetida de la misma letra que la celda correcta
+	method existeCeldaRepetida(celdaCorrecta)= celdasIntento.any({
+			celda => celda.letraQueRepresenta() == celdaCorrecta.letraQueRepresenta() and 
+			celda.ordenEnIntento() != celdaCorrecta.ordenEnIntento()
+			})
+
+	//devuelve una celda repetida de la misma letra que la celda correcta
+	method celdaRepetida(celdaCorrecta) = celdasIntento.find({
+			celda => celda.letraQueRepresenta() == celdaCorrecta.letraQueRepresenta() and 
+			celda.ordenEnIntento() != celdaCorrecta.ordenEnIntento() 
+			})
 	
 	// actualiza las celdas estado de las letras correspondientes
 	method actualizarCeldasEstado(palabraCorrecta){
@@ -204,14 +225,16 @@ class Intento{
 			const letra = celda.letraQueRepresenta().toString()
 			
 			// La letra esta en la posicion correcta
-			if( letra == palabraCorrecta.charAt(celda.ordenEnIntento() ) and not self.esLetraMarcada(letra) ){
+			if( letra == palabraCorrecta.charAt(celda.ordenEnIntento() ) ){
 				self.aniadirLetraMarcada(letra)
+				self.actualizarCeldasAnterioresIncorrectas(celda)
 				celda.celdaEstado().posicionCorrecta()
 				teclado.teclaQueRepresentaALaLetra(letra).celdaEstado().posicionCorrecta()
 			}
 			
 			// La letra esta en la posicion incorrecta
 			else if( palabraCorrecta.contains( letra ) and not self.esLetraMarcada(letra) ){
+				self.aniadirLetraMarcada(letra)
 				celda.celdaEstado().posicionEquivocada()
 				teclado.teclaQueRepresentaALaLetra(letra).celdaEstado().posicionEquivocada()
 			}

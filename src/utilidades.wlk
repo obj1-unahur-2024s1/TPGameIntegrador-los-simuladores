@@ -6,9 +6,6 @@ class Celda{
 	//contiene la posicion de la celda
 	const property position
 	
-	//id unico para poder identificar celdas en particular
-	const property id = ""
-	
 	method image()
 	
 	//dibuja esta celda si no esta ya dibujada

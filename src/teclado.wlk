@@ -10,10 +10,10 @@ class CeldaTecla inherits Celda{
 	const property teclaQueRepresenta
 	
 	//contiene el estado de la tecla
-	const property celdaEstado = new CeldaEstado(id="estadoTecla"+teclaQueRepresenta, position=self.position(), ruta="celdasTeclado/celdaTeclado")
+	const property celdaEstado = new CeldaEstado(position=self.position(), ruta="celdasTeclado/celdaTeclado")
 	
 	//contiene la letra que representa esta tecla
-	const celdaLetra = new CeldaLetra(id="letraTecla"+teclaQueRepresenta, letra=teclaQueRepresenta, position = position) 
+	const celdaLetra = new CeldaLetra(letra=teclaQueRepresenta, position = position) 
 	
 	// contiene el input de esta tecla
 	const input = new Key(keyCodes=[self.keyCodeInput()])

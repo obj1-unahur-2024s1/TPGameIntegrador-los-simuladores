@@ -48,7 +48,7 @@ object juego {
 	}
 }
 
-object instrucciones inherits Celda(position = game.at(5,3), id = "instrucciones"){
+object instrucciones inherits Celda(position = game.at(5,3)){
 	override method image() = "instrucciones.png"
 	override method resetear(){}
 	
