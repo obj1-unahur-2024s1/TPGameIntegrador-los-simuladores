@@ -75,6 +75,14 @@ object pantallaPerdedor inherits Pantalla(esDeTransicion = true){
 	}
 }
 
+object pantallaPerdedorTiempo inherits Pantalla(esDeTransicion = true){
+	
+	method initialize(){
+		componentes.add(new Componente(elementos = [new CeldaPantalla(imagen="pantallaPerdedorTiempo", position = game.at(0,0))]))
+	}
+
+}
+
 object inputsMenus inherits Componente{
 	override method agregarElementos(){
 		

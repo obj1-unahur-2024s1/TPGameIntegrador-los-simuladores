@@ -82,7 +82,7 @@ object timer inherits Componente{
 	
 	method verificarSiTermino(){
 		if(tiempoRestante == 0){
-			juego.cambiarPantalla(pantallaPerdedor)
+			juego.cambiarPantalla(pantallaPerdedorTiempo)
 		}
 	}
 }
