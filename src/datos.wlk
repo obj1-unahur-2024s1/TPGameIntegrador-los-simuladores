@@ -65,7 +65,7 @@ object palabrasValidas{
 		
 		// Palabras que comienzan con A
 		
-		matrizPalabras.add( ["anole", "anoto", "anulo", "anote", "anota", "anoto", "anona", "anola", "anolo", "ansia", "anoas", "anjeo", 'abeto', "abeja", 
+		matrizPalabras.add( ["aereo","anole", "anoto", "anulo", "anote", "anota", "anoto", "anona", "anola", "anolo", "ansia", "anoas", "anjeo", 'abeto', "abeja", 
 		'actor', 'aguas', 'agudo', 'alado', 'albas', 'altar', 'antes', 'atizo', 'avala', 'ayuda', "ansas", "ansie", "anude", "anura", "anuos", "anudo", 
 		"anuda", "anual", "antro", "antis", "aneja", "alojo", "aloja", "aludo", "alude", "apoye", "apoya", "apoyo", "amida", "ataja", "almas", "animo", 
 		"aocar", "anear", "aneja", "anego", "anega", "andel", "andas", "andar", "aneto", "anime", "anima", "anido", "anide", "anida", "anexa", "angra", 
