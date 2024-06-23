@@ -1,6 +1,11 @@
 import utilidades.*
 import wollok.game.*
 import componentes.*
+import timer.*
+import teclado.*
+import titulo.*
+import tablero.*
+import juego.*
 
 class Pantalla{
 	
@@ -13,13 +18,14 @@ class Pantalla{
 	}
 	
 	method eliminar(){
-		/**componentes.forEach({
-			componente => componente.borrarElementos()
-		})*/
+		self.resetear()
+		//componentes.forEach({
+		//	componente => componente.borrarElementos()
+		//})
 		game.clear()
 	}
 	
-	method reset(){}
+	method resetear(){}
 }
 
 class CeldaPantalla inherits Celda{
@@ -38,21 +44,50 @@ object pantallaInicio inherits Pantalla{
 	}
 }
 
-object pantallaFinPartida inherits Pantalla{
-	
-	const gano = true
-	
-	method imagenCorrespondiente() = if(gano){"Ganador"}else{"Perdedor"}
+object pantallaGanador inherits Pantalla{
 	
 	method initialize(){
-		componentes.add(new Componente(elementos = [new CeldaPantalla(imagen=self.imagenCorrespondiente(), id= "celdaPantallaInicio", position = game.at(0,0))]))
-		//componentes.add(inputsMenus)
+		componentes.add(new Componente(elementos = [new CeldaPantalla(imagen="Ganador", id= "celdaPantallaInicio", position = game.at(0,0))]))
+		componentes.add(inputsMenus)
+	}
+}
+
+object pantallaPerdedor inherits Pantalla{
+	
+	method initialize(){
+		componentes.add(new Componente(elementos = [new CeldaPantalla(imagen="Perdedor", id= "celdaPantallaInicio", position = game.at(0,0))]))
+		componentes.add(inputsMenus)
 	}
 }
 
 object inputsMenus inherits Componente{
 	override method agregarElementos(){
-		keyboard.num1().onPressDo( {console.println("facil")} /**iniciar partida facil*/)
-		keyboard.num2().onPressDo( {console.println("dificil")}/**iniciar partida dificil*/)
+		
+		// iniciar partida facil
+		keyboard.num1().onPressDo( {
+			pantallaJuego.esPorTiempo(false)
+			juego.cambiarPantalla(pantallaJuego)
+		} )
+		
+		//iniciar partida dificil
+		keyboard.num2().onPressDo( {
+			pantallaJuego.esPorTiempo(true)
+			juego.cambiarPantalla(pantallaJuego)
+		}/**iniciar partida dificil*/)
 	}
+}
+
+object pantallaJuego inherits Pantalla(componentes = [tablero,teclado,titulo,timer]){
+	var property esPorTiempo = false
+	override method dibujar(){
+		super()
+		timer.habilitarSiEsNecesario(esPorTiempo)
+	}
+	
+	override method resetear(){
+		componentes.forEach({ componente => componente.resetearElementos()})
+		
+	}
+	
+
 }

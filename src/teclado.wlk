@@ -69,8 +69,16 @@ object teclado inherits Componente{
 		posicionesTeclas.lista().forEach({
 			letra, posicion =>
 			elementos.add(new CeldaTecla(teclaQueRepresenta=letra, position=posicion))
-			console.println(letra)
 		})
+		self.modificarTeclasEnterYDelete()	
+	}
+	
+	override method resetearElementos(){
+		super()
+		self.modificarTeclasEnterYDelete()
+	}
+	
+	method modificarTeclasEnterYDelete(){
 		elementos.get(0).celdaEstado().estado("Delete")
 		elementos.get(1).celdaEstado().estado("Enter")	
 	}

@@ -24,7 +24,7 @@ class Celda{
 			game.removeVisual(self)
 		}
 	}
-	method resetear() // implementar, me parece que para cada uno va a ser distinto, asi que capaz que hay que implementar en cada subclase en vez de esta super
+	method resetear(){} // implementar, me parece que para cada uno va a ser distinto, asi que capaz que hay que implementar en cada subclase en vez de esta super
 	
 	//devuelve si esta celda esta dibujada
 	method estaDibujado()= game.hasVisual(self)
@@ -72,7 +72,9 @@ class CeldaEstado inherits Celda{
 		estado = estados
 	}
 	
-	override method resetear(){}
+	override method resetear(){
+		self.inicial()
+	}
 }
 
 //representa una letra

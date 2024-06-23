@@ -4,6 +4,7 @@ import wollok.game.*
 import datos.*
 import componentes.*
 import utilidades.*
+import pantallas.*
 
 object tablero inherits Componente{
 	
@@ -11,11 +12,17 @@ object tablero inherits Componente{
 	var numeroDeIntentoActual = 0
 	
 	// La palabra a adivinar
-	var palabraAAdivinar = null
+	var property palabraAAdivinar = null
 	
 	// indica si el jugador gano la partida
 	var property gano = false
 	
+	override method resetearElementos(){
+		super()
+		numeroDeIntentoActual = 0
+		gano = false
+		self.nuevaPalabraAAdivinar()
+	}
 	
 	method initialize(){
 		self.nuevaPalabraAAdivinar()
@@ -34,8 +41,9 @@ object tablero inherits Componente{
 	
 	//Agrega la letra que fue presionada al intento actual 
 	method teclaPresionada(tecla){
-		if(numeroDeIntentoActual < 6 ){
+		if(numeroDeIntentoActual < 6 and not gano){
 			self.intentoActual().escribir(tecla)
+			
 		}
 	}
 	
@@ -61,9 +69,10 @@ object tablero inherits Componente{
 	//verifica si el jugador gano. si gano, muestra la pantalla de ganar, sino, la de perder
 	method verificarSiGano(){
 		if(not gano and numeroDeIntentoActual == 5){
-			//pantallaPerdiste
+			game.schedule(1000, {juego.cambiarPantalla(pantallaPerdedor)}) 
 		}else{
-			//pantallaGanaste
+			gano = true
+			game.schedule(1000, {juego.cambiarPantalla(pantallaGanador)})
 		}
 	}
 
@@ -129,6 +138,14 @@ class Intento{
 		})
 	}
 	
+	method resetear(){
+		celdasIntento.forEach({ celda => celda.resetear()})
+		celdaIntentoActual = 0
+		palabraQueRepresenta = ""
+		esValido = false
+		
+	}
+	
 	// Agregua la letra al intento
 	method escribir(letra){
 		if(celdaIntentoActual < 5){
@@ -178,13 +195,21 @@ class Intento{
 		celdasIntento.forEach({
 			celda => 
 			const letra = celda.letraQueRepresenta().toString()
+			
+			// La letra esta en la posicion correcta
 			if( letra == palabraCorrecta.charAt(celda.ordenEnIntento() ) ){
 				celda.celdaEstado().posicionCorrecta()
 				teclado.teclaQueRepresentaALaLetra(letra).celdaEstado().posicionCorrecta()
-			}else if( palabraCorrecta.contains( letra ) ){
+			}
+			
+			// La letra esta en la posicion incorrecta
+			else if( palabraCorrecta.contains( letra ) ){
 				celda.celdaEstado().posicionEquivocada()
 				teclado.teclaQueRepresentaALaLetra(letra).celdaEstado().posicionEquivocada()
-			}else{
+			}
+			
+			//	La palabra a adivinar no contiene la letra
+			else{
 				celda.celdaEstado().noLaContiene()
 				teclado.teclaQueRepresentaALaLetra(letra).celdaEstado().noLaContiene()
 			}
@@ -200,7 +225,7 @@ class Intento{
 	//cambia a correctas todas las celdas del intento
 	method ponerTodasCorrectas(){
 		celdasIntento.forEach({
-			celda => celda.posicionCorrecta()
+			celda => celda.celdaEstado().posicionCorrecta()
 		})
 	}
 	

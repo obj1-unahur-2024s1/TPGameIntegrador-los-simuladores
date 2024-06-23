@@ -1,12 +1,14 @@
 import componentes.*
 import utilidades.*
 import wollok.game.*
+import juego.*
+import pantallas.*
 
 
 object timer inherits Componente{
 	
 	//contiene el tiempo en segundos del timer
-	const tiempoEnSegundos = 150 
+	const tiempoEnSegundos = 60 
 	
 	//contiene el tiempo restante, al principio es el mismo que el tiempoEnSegundos
 	var tiempoRestante = tiempoEnSegundos
@@ -25,6 +27,16 @@ object timer inherits Componente{
 	}
 	
 	method tiempoRestante() = tiempoRestante	
+	
+	method habilitarSiEsNecesario(esPorTiempo){
+		if(esPorTiempo){
+			self.activar()
+			
+		}else{
+			self.desactivar()
+			self.borrarElementos()
+		}
+	}
 	
 	//activa el timer y cuenta el primer segundo
 	method activar(){ 
@@ -57,10 +69,20 @@ object timer inherits Componente{
 		if(activado){
 			tiempoRestante = tiempoRestante - 1
 			game.schedule(1000, { => self.actualizar()})
-			elementos.get(0).actualizarCaracter(self.minuto())
-			elementos.get(2).actualizarCaracter(self.segundo1())
-			elementos.get(3).actualizarCaracter(self.segundo2())
-			console.println(tiempoRestante.toString() + " " + self.minuto() + " " +  self.segundo1() + " " +  self.segundo2()) // debug, borrar para la entrega final
+			self.actualizarNumeros()
+			self.verificarSiTermino()
 		}	
 	}	
+	
+	method actualizarNumeros(){
+		elementos.get(0).actualizarCaracter(self.minuto())
+		elementos.get(2).actualizarCaracter(self.segundo1())
+		elementos.get(3).actualizarCaracter(self.segundo2())
+	}
+	
+	method verificarSiTermino(){
+		if(tiempoRestante == 0){
+			juego.cambiarPantalla(pantallaPerdedor)
+		}
+	}
 }

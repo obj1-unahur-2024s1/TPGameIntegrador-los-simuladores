@@ -2,6 +2,7 @@ import utilidades.*
 import componentes.*
 import wollok.game.*
 
+
 // celda que representa una letra de wollok
 class CeldaTitulo inherits Celda{
 	
@@ -48,10 +49,9 @@ object titulo inherits Componente{
 		posicionesLetrasTitulo.lista().forEach({
 			letra, posicion =>
 			elementos.add(new CeldaTitulo(id=letra, position=posicion))
+		})
 	}
-	
-	)}
-	
+
 }
 
 
