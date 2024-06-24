@@ -19,10 +19,10 @@ object timer inherits Componente{
 	
 	// agrega los elementos que construyen al timer
 	method initialize(){
-		elementos.add(new CeldaTimer(caracter=self.minuto(), position= game.at(27,27)))
-		elementos.add(new CeldaTimer(caracter="dosPuntos", position= game.at(27,27)))
-		elementos.add(new CeldaTimer(caracter=self.segundo1(), position= game.at(28,27)))
-		elementos.add(new CeldaTimer(caracter=self.segundo2(), position= game.at(29,27)))
+		elementos.add(new CeldaTimer(caracter=self.minuto(), position= game.at(24,24)))
+		elementos.add(new CeldaTimer(caracter="dosPuntos", position= game.at(24,24)))
+		elementos.add(new CeldaTimer(caracter=self.segundo1(), position= game.at(25,24)))
+		elementos.add(new CeldaTimer(caracter=self.segundo2(), position= game.at(26,24)))
 		game.schedule(3000,{=> self.activar()})
 	}
 	

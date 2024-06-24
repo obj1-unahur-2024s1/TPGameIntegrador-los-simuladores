@@ -32,12 +32,6 @@ object juego {
 		keyboard.space().onPressDo({
 			instrucciones.habilitar()
 		})
-		keyboard.num3().onPressDo({
-			game.say(instrucciones,game.allVisuals().size().toString())
-		})
-		keyboard.num4().onPressDo({
-			game.say(instrucciones,tablero.palabraAAdivinar())
-		})
 	}
 	
 	method cambiarPantalla(nuevaPantalla){
