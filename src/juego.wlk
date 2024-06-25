@@ -19,12 +19,7 @@ object juego {
 		game.height(28)
 		game.boardGround("fondo.png")
 		pantallaActual.dibujarPantalla()
-		//titulo.agregarElementos()
-		//teclado.agregarElementos()
-		//tablero.agregarElementos()
-		//timer.agregarElementos()
 		self.activarInstrucciones()
-		//self.generarPartidaFacil()
 		game.start()
 	}
 	

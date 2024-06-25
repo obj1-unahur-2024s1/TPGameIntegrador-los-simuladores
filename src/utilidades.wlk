@@ -21,7 +21,7 @@ class Celda{
 			game.removeVisual(self)
 		}
 	}
-	method resetear(){} // implementar, me parece que para cada uno va a ser distinto, asi que capaz que hay que implementar en cada subclase en vez de esta super
+	method resetear(){} 
 	
 	//devuelve si esta celda esta dibujada
 	method estaDibujado()= game.hasVisual(self)
