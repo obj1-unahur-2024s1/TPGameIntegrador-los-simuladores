@@ -104,3 +104,12 @@ class CeldaTimer inherits Celda{
 		caracter = nuevoCaracter
 	}
 }
+
+class CeldaParlante inherits Celda{
+	//representa el parlante que se quiere representar on/off
+	var parlante
+	
+	override method image() = parlante+".png"
+	
+	method cambiarParlante(nuevoEstado){parlante = nuevoEstado}
+}

@@ -68,9 +68,13 @@ object tablero inherits Componente{
 	//verifica si el jugador gano. si gano, muestra la pantalla de ganar, sino, la de perder
 	method verificarSiGano(){
 		if(not gano and numeroDeIntentoActual == 5){
-			game.schedule(1000, {juego.cambiarPantalla(pantallaPerdedor)}) 
+			pantallaJuego.detenerSonido()	
+			game.schedule(50, {juego.cambiarPantalla(pantallaPerdedor)})
+			
+			 
 		}else if(gano){
-			game.schedule(1000, {juego.cambiarPantalla(pantallaGanador)})
+			pantallaJuego.detenerSonido()		
+			game.schedule(50, {juego.cambiarPantalla(pantallaGanador)})
 		}
 	}
 

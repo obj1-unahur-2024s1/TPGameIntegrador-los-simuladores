@@ -7,6 +7,7 @@ import tablero.*
 import utilidades.*
 import pantallas.*
 
+
 //se encarga de manejar el estado del juego
 object juego {
 	
@@ -18,9 +19,11 @@ object juego {
 		game.width(30)
 		game.height(28)
 		game.boardGround("fondo.png")
+		pantallaActual.inicializar()
 		pantallaActual.dibujarPantalla()
 		self.activarInstrucciones()
 		game.start()
+		
 	}
 	
 	method activarInstrucciones(){
@@ -32,9 +35,11 @@ object juego {
 	method cambiarPantalla(nuevaPantalla){
 		pantallaActual.eliminar()
 		pantallaActual = nuevaPantalla
+		pantallaActual.inicializar()
 		pantallaActual.dibujarPantalla()
 		self.activarInstrucciones()
 	}
+
 }
 
 object instrucciones inherits Celda(position = game.at(5,4)){
